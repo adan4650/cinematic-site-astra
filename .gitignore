@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env
+.DS_Store
+
+# Generated sites (each is its own deployable project)
+outputs/*/
+!outputs/.gitkeep
+
+# Local Claude Code config
+.claude/settings.local.json
+.claude/launch.json
