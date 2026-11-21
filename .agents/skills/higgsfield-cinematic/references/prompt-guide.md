@@ -1,9 +1,8 @@
----
-name: higgsfield-cinematic-hero
-description: Generate Seedance 2.0 prompts optimized for cinematic hero background videos. Produces 8-10 second looping clips with atmospheric, slow-motion aesthetics ideal for fullscreen website backgrounds.
----
-
 # Higgsfield Seedance 2.0 - Hero Background Video Prompt Generator
+
+Adapted from the original Logiaweb prompt guide. These are creative examples,
+not an API schema. Check the current model's supported settings. The defaults
+below yield to the user's brief and the execution guidance in [SKILL.md](../SKILL.md).
 
 ## Purpose
 
@@ -13,7 +12,7 @@ Generate production-ready Seedance 2.0 prompts specifically optimized for **hero
 
 ## Hero Background Video Constraints
 
-Every prompt you generate MUST follow these rules:
+Use these starting points unless the brief or supported model settings differ:
 
 - **Duration:** 8-10 seconds
 - **Aspect Ratio:** 16:9 widescreen
@@ -82,7 +81,7 @@ Use these slow, continuous movements. NEVER use whip pans, fast cuts, or handhel
 |----------|-------|----------|-----------------|
 | **Slow Dolly Forward** | 1-1.5 ft/s | Drawing viewer in, depth | "Camera dolly forward at 1 ft/second. Gentle lens breathing. No focus shift." |
 | **Crane Ascend** | 0.5-1 ft/s | Revealing scale, majesty | "Camera rises vertically at 0.5 ft/second. Tilt maintains horizon." |
-| **Orbit** | 15-20 deg/s | Environmental reveal, 3D depth | "Camera orbits 90 degrees clockwise over 8 seconds. Constant 6-foot radius." |
+| **Orbit** | 5-10 deg/s | Environmental reveal, 3D depth | "Camera orbits 60 degrees clockwise over 8 seconds. Constant 6-foot radius." |
 | **Static + Atmospheric** | 0 ft/s | Textural, meditative | "Camera locked static. All motion from environmental elements: particles, light shifts, surface ripples." |
 | **Lateral Track** | 1-2 ft/s | Parallax depth, material showcase | "Camera tracks laterally right at 1.5 ft/second. Parallax between foreground and background layers." |
 | **Slow Pull Back** | 0.5-1 ft/s | Context reveal, breathing room | "Camera pulls back at 0.5 ft/second. Gradually reveals surrounding environment." |
@@ -152,7 +151,7 @@ black surface. Micro-bubbles visible in the liquid. Warm atmospheric haze
 softens the deep background. Dust particles float through the beam of light.
 
 CAMERA MOVEMENT (continuous):
-Camera dolly forward at 0.8 ft/second throughout. 50mm equivalent lens.
+Camera locked off throughout. 50mm equivalent lens.
 f/2.0 shallow depth of field - liquid surface sharp, background dissolves
 into warm bokeh. Slight downward angle (15 degrees) looking at the surface.
 
@@ -169,7 +168,7 @@ Lifted blacks (shadows at dark brown, not pure black). Highlights glow warm.
 Subtle 15% film grain. Contrast: medium-high with smooth rolloff.
 
 LOOP POINT (8-10s):
-Camera position at 10s matches a natural continuation point.
+Camera position and exposure remain identical at the start and end.
 The liquid pour is continuous - end frame shows same flow state as opening.
 Atmospheric particles cycle smoothly.
 
@@ -237,10 +236,9 @@ float through the light beams. Ground: dark moss-covered forest floor,
 barely visible beneath fog.
 
 CAMERA MOVEMENT (continuous):
-Slow crane ascend at 0.3 ft/second. Starting at fog-level (4 feet),
-rising to 8 feet over 10 seconds. 35mm equivalent. f/2.8 - foreground
-trees blur, fog layer sharp, background trees soft. As camera rises,
-the perspective shifts from immersed-in-fog to looking-down-at-fog.
+Camera locked at fog-level (4 feet). 35mm equivalent. f/2.8 - foreground
+trees blur, fog layer sharp, background trees soft. All motion comes from
+drifting fog and floating particles; camera framing remains constant.
 
 LIGHTING:
 Golden hour directional key from upper-left at 3200K. Intensity creates
@@ -257,8 +255,8 @@ Medium film grain (25%). Contrast: low-medium, fog reduces contrast naturally.
 
 LOOP POINT (8-10s):
 Fog drift is continuous and cyclical. God ray intensity matches at start
-and end. Camera ascent is subtle enough that loop cut is masked by
-atmospheric movement. Particle float provides visual continuity.
+and end. Fixed framing avoids a camera-position jump at the loop.
+Particle float provides visual continuity. Inspect the rendered loop boundary.
 
 OUTPUT: 10 seconds, 16:9 widescreen, 720p, no audio
 ```
@@ -267,13 +265,15 @@ OUTPUT: 10 seconds, 16:9 widescreen, 720p, no audio
 
 ## Material References
 
-If the user provides reference images or videos, incorporate them using Seedance's material system:
+If the user provides references, attach them with the actual interface's
+supported reference mechanism. The following labels are descriptive placeholders,
+not literal syntax to send to a model or API:
 
 ```
-@material[reference_image]: Match the color palette and atmospheric quality
+[Attached reference image]: Match the color palette and atmospheric quality
 of this image. Use as lighting and mood reference, not literal recreation.
 
-@material[brand_logo]: Extract dominant brand colors. DO NOT include the
+[Attached brand logo]: Extract dominant brand colors. DO NOT include the
 logo in the video - use the colors to inform the lighting and grading.
 ```
 

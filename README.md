@@ -1,145 +1,118 @@
-# Cinematic Site Generator
+# Cinematic Site — Astra Edition
 
-One sentence in, cinematic website out. A fully automated pipeline that takes a text brief and produces a premium hero landing page with an AI-generated video background.
+Turn a short brand brief into a cinematic landing page with **Codex + Astra**, Higgsfield video, and a deployable Next.js project.
 
-Powered by [Higgsfield](https://higgsfield.ai) Seedance 2.0 for video generation and [Claude Code](https://claude.ai/claude-code) for orchestration.
+Adapted from [Logiaweb/cinematic-site](https://github.com/Logiaweb/cinematic-site). This repository contains agent instructions and reusable skills, not a prebuilt website or an OpenAI API service. Codex creates each website in `outputs/<slug>/` when you give it a brief.
 
----
+## Start in Codex
 
-## What It Does
+1. Clone your copy:
 
-```
-Input:  "A luxury candle brand called Ember & Oak"
-Output: A live deployed website with cinematic video hero
-```
-
-The `/generate` command runs a fully automated pipeline:
-
-1. **Brief** - You describe the site. Optionally drop a reference image for the visual direction.
-2. **Video** - Claude takes control of your browser, opens Higgsfield, writes an optimized Seedance 2.0 prompt, generates a cinematic hero video, and downloads it.
-3. **Build** - Creates a single full-viewport Next.js hero page around the video.
-4. **Deploy** - Deploys to Vercel and returns the live URL.
-
----
-
-## Prerequisites
-
-- [Claude Code](https://claude.ai/claude-code) (CLI or IDE extension)
-- [Node.js](https://nodejs.org) 20+
-- A [Higgsfield.ai](https://higgsfield.ai) account (free tier works)
-- Google Chrome (for browser automation)
-- [Vercel CLI](https://vercel.com/docs/cli) (for auto-deployment)
-
----
-
-## Setup
-
-1. Clone this repo:
-   ```bash
-   git clone https://github.com/Logiaweb/cinematic-site.git
-   cd cinematic-site
+   ```sh
+   git clone https://github.com/adan4650/cinematic-site-astra.git
+   cd cinematic-site-astra
    ```
 
-2. Install and connect Vercel:
-   ```bash
-   npm i -g vercel
-   vercel login
+2. Open this folder as a Codex project and start a new chat. Choose **Astra** in the model selector. The project configuration defaults to `gpt-6.2-astra` where supported; select an available Astra model if your account or client differs. No OpenAI API key is needed for this repository when using Codex with your ChatGPT sign-in.
+3. Send a brief:
+
+   ```text
+   Use $cinematic-generate to create a cinematic landing page for Ember & Oak,
+   a luxury candle brand. Warm amber light, dark stone, quiet atmosphere.
+   Build locally first and use a poster until I choose a video.
    ```
 
-3. Open in Claude Code. The Chrome DevTools MCP auto-loads from `.mcp.json`.
+   Or use ordinary language: `Create a cinematic site for my outdoor brand, Ridgeline.`
 
-4. Log into Higgsfield.ai in Chrome before running the command.
+Codex reads [AGENTS.md](AGENTS.md) and discovers skills in `.agents/skills/`. If your client has not refreshed its skill list, start a new session or explicitly ask it to read [.agents/skills/cinematic-generate/SKILL.md](.agents/skills/cinematic-generate/SKILL.md). The original Claude `/generate` command is replaced by `$cinematic-generate`; typing `/generate` is not a portable Codex command.
 
----
+## What you need
 
-## Usage
+| Capability | Requirement |
+| --- | --- |
+| Generate project files | Codex with access to this folder and a shell |
+| Install and run a generated site | A supported Node.js LTS release with npm; use Node 24 LTS as a starting point and check the chosen Next.js version's engine requirement |
+| Generate new video | Connected Higgsfield tools or an authenticated browser, access to the chosen video model, and enough credits |
+| Use existing video | A local video you provide; Higgsfield is optional |
+| Preview the site | Available browser tools or a browser you open yourself |
+| Deploy to Vercel | Vercel access, a selected account/project, and a request to deploy |
 
-```
-/generate "A luxury candle brand called Ember & Oak"
-```
+The root has no `package.json`: run npm commands inside a generated site. New media generation may consume credits. A clone alone does not connect Higgsfield, grant model access, log into Vercel, or install browser tools.
 
-You can also drop a reference image alongside your brief for the visual direction.
+## Workflow
 
-The command will:
-- Parse your brief and confirm the interpretation
-- Generate a video prompt and ask for your approval
-- Take control of Chrome, open Higgsfield, generate the video, and download it
-- Build a single-viewport Next.js site in `outputs/ember-and-oak/`
-- Deploy to Vercel and return the live URL
+1. **Brief:** infer a visual direction, inspect any reference, and choose a new output folder.
+2. **Media:** use your existing video, generate with available Higgsfield tools, or build with a real poster while media is pending.
+3. **Build:** create a Next.js App Router site with TypeScript, React, Tailwind v4, and restrained motion.
+4. **Verify:** run type checking and a production build; inspect desktop, mobile, keyboard access, video failure, and reduced motion.
+5. **Deploy when requested:** deploy the verified output, then check the returned URL.
 
----
+The default composition is a dark, spacious hero with left-aligned type and one accent. It fills the viewport where content fits and remains scrollable when a short screen or enlarged text needs more room. Decorative video has a poster, reduced-motion behavior, and a pause control.
 
-## How It Works
+## Browser and Higgsfield setup
 
-```
-Brief (text) + optional reference image
-    |
-    v
-[Higgsfield Cinematic Skill]  -->  Seedance 2.0 prompt
-    |
-    v
-[Chrome DevTools MCP]         -->  Automates Higgsfield.ai
-    |
-    v
-hero.mp4 (AI-generated video)
-    |
-    v
-[Site Builder Skill]          -->  Next.js project
-    +
-[Taste Skill]                 -->  Design quality enforcement
-    |
-    v
-[Vercel]                      -->  Live URL
+Use connected Higgsfield tools first when they support the task. Available browser tools are a fallback. If neither is available, the agent can still build the site and provide a video prompt for you to run manually.
+
+For optional Chrome DevTools MCP, follow [the browser setup guide](docs/browser-setup.md). Its sample configuration is opt-in; the repository does not automatically start a browser server. It uses the official `chrome-devtools-mcp` package.
+
+## Run a generated site
+
+After Codex creates an output, change into its directory:
+
+```sh
+cd outputs/ember-and-oak
+npm ci
+npm run dev
 ```
 
----
+Use `npm install` on the first run if the agent could not create a lockfile. Verify with:
 
-## Generated Site Stack
-
-- Next.js 16 + React 19 + TypeScript
-- Tailwind CSS v4
-- Framer Motion (spring physics)
-- Single full-viewport video hero (muted, autoplay, loop, no scroll)
-- Dark mode, responsive, accessible
-- prefers-reduced-motion support
-
----
-
-## Project Structure
-
-```
-cinematic-site/
-├── .claude/
-│   ├── commands/
-│   │   └── generate.md              # The orchestration command
-│   └── skills/
-│       ├── higgsfield-cinematic/    # Video prompt generation
-│       ├── taste/                   # Design quality rules
-│       └── site-builder/            # Site template specs
-├── outputs/                         # Generated sites land here
-│   └── {slug}/                      # Each is a deployable Next.js app
-├── .mcp.json                        # Chrome DevTools MCP config
-├── CLAUDE.md                        # Project context for Claude
-└── README.md                        # This file
+```sh
+npm run typecheck
+npm run build
 ```
 
----
+Ask Codex to deploy when ready. For a manual Vercel preview, from the generated site:
 
-## Examples
+```sh
+npx vercel login
+npx vercel
+```
 
-After running `/generate`:
+Use `npx vercel --prod` only for an intended production deployment. Generated sites are ignored by this workflow repository, as in the original. To version one, initialize it as a separate repository or deliberately change the output ignore rule.
 
-| Brief | Output |
-|-------|--------|
-| "A luxury candle brand called Ember & Oak" | Warm amber palette, liquid/flame video background |
-| "A minimal tech startup called Void" | Cool monochrome, abstract geometric video |
-| "An outdoor adventure brand called Ridgeline" | Nature tones, fog/mountain atmospheric video |
+## Use in regular ChatGPT
 
----
+Open [the standalone ChatGPT prompt](prompts/chatgpt-astra.md), copy the prompt block into your chat or project instructions, and supply your brief and any reference. Choose Astra if it is available on that surface.
 
-## Credits
+The prompt is self-contained. File creation, browser control, video generation, and deployment depend on tools actually available in that chat. Without those tools, it provides site files, a media prompt, and run instructions and identifies the steps still requiring execution.
 
-- Video generation: [Higgsfield](https://higgsfield.ai) Seedance 2.0
-- Design quality: Adapted from [Taste Skill](https://github.com/Leonxlnx/taste-skill)
-- Orchestration: [Claude Code](https://claude.ai/claude-code)
-- Built by [Adrien Ninet](https://instagram.com/adrien.ninet)
+## Repository map
+
+```text
+AGENTS.md                              Repository guidance for Codex
+.codex/config.toml                     Astra default; no permission overrides
+.codex/chrome-devtools.example.toml     Optional browser MCP configuration
+.agents/skills/
+  cinematic-generate/                  End-to-end orchestration
+  higgsfield-cinematic/                 Hero-video prompting and delivery
+  cinematic-site-builder/               Next.js build and verification
+  cinematic-taste/                      Visual direction and interaction quality
+prompts/chatgpt-astra.md                Self-contained ChatGPT instructions
+docs/browser-setup.md                  Browser setup and troubleshooting
+docs/repository-review.md              Complete source review and migration notes
+outputs/                              Generated sites (ignored)
+```
+
+## Review and credits
+
+See [the repository review](docs/repository-review.md) for every source file examined, the changes, and validation limits.
+
+- Original workflow: [Adrien Ninet / Logiaweb](https://github.com/Logiaweb/cinematic-site).
+- Original design guidance credits [Taste Skill](https://github.com/Leonxlnx/taste-skill).
+- Video service: [Higgsfield](https://higgsfield.ai).
+- Astra adaptation maintained in [adan4650/cinematic-site-astra](https://github.com/adan4650/cinematic-site-astra).
+
+Original Git history and attribution are retained. The reviewed upstream commit contains no license file; this adaptation does not add or imply a license for upstream material.
+
+Reference documentation: [Codex skills](https://developers.openai.com/codex/skills), [MCP configuration](https://developers.openai.com/codex/mcp), and [model selection](https://learn.chatgpt.com/docs/models).

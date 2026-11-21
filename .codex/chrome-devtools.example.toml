@@ -1,0 +1,10 @@
+# OPTIONAL: merge this table into .codex/config.toml if you need this server.
+# This example is not automatically loaded as a Codex configuration file.
+[mcp_servers.chrome_devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"]
+startup_timeout_sec = 60
+
+# If npx cannot be launched directly on Windows, replace command and args with:
+# command = "cmd"
+# args = ["/c", "npx", "-y", "chrome-devtools-mcp@latest"]

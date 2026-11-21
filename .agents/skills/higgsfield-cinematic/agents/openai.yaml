@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cinematic Hero Video"
+  short_description: "Create atmospheric website background media"
+  default_prompt: "Use $higgsfield-cinematic to prepare a looping hero video for my brand."

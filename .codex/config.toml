@@ -1,0 +1,6 @@
+# Model default for this project. Select another available Astra model if needed.
+# Project configuration is applied only when the client trusts this repository.
+model = "gpt-6.2-astra"
+
+# Browser tools are optional. See docs/browser-setup.md.
+# Authentication, permissions, and sandbox defaults remain user-controlled.

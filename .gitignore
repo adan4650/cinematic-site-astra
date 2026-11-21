@@ -1,12 +1,25 @@
 node_modules/
 .next/
-.env
+.vercel/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+*.log
 .DS_Store
+Thumbs.db
 
-# Generated sites (each is its own deployable project)
-outputs/*/
-!outputs/.gitkeep
+# Environment values, including development and production variants.
+.env
+.env.*
+!.env.example
+!.env.*.example
 
-# Local Claude Code config
-.claude/settings.local.json
-.claude/launch.json
+# Generated projects and media stay local unless intentionally versioned.
+/outputs/*
+!/outputs/.gitkeep
+/work/
+
+# Local tool state and credentials; committed project config remains visible.
+.codex/auth.json
+.codex/config.local.toml

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cinematic Site — Astra"
+  short_description: "Build cinematic sites from a brand brief"
+  default_prompt: "Use $cinematic-generate to build a cinematic landing page from my brand brief."
